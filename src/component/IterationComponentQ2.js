@@ -20,21 +20,35 @@ const IterationComponentQ2 = () => {
 
     const [list, setList] = useState(data);
     const newlist = list.map( item => <li key={item.id}>type : {item.type}, teacher : {item.teacher}</li> )
+    const [search, setSearch] = useState('');//input값
 
     //3 - 셀렉트박스가 체인지되면 이벤트객체를 활용해서 선택된 값만 필터링해주세요.
     const handleChange = (e) => {
-      console.log(e.target);
-      
+      console.log(e.target.value);
+      const newlist = data.filter(item => item.type === e.target.value)
+      setList(newlist);
+      //newlist에서 필터를 하면 그다음에 남은 값이 필터링되고 남은 것 뿐이라서 그 이후부터는 검색을 해도 나오는게 없음
     }
 
 	  //4 - 검색기능 (input태그의 값이 변경되면 핸들링)
+    const handleClick = () => {
+
+      let newlist =data.filter( item => { item.type.toLowerCase().includes(search) ||
+                             item.teacher.includes(search) 
+        // return item.type.toLowerCase().includes(search) ||
+        //        item.teacher.includes(search) 
+        
+                    });
+    }
+
+
 
     return (
         <div>
 			    <hr/>
             <h3>실습</h3>
-            Search: <input type="text" />
-            <button >검색</button>
+            Search: <input type="text" onChange={ e => setSearch(e.target.value) } value ={search}/>
+            <button onClick={handleClick}>검색</button>
 
             <br/>
             
